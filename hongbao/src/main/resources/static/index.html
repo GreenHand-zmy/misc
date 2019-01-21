@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抢红包</title>
+</head>
+<body>
+
+</body>
+<script src="js/jquery-3.2.1.js"></script>
+<script src="js/cookies.js"></script>
+<script>
+    /*var cookie = Cookies.getCookie("snsInfo[101204453]");
+    console.log(cookie);*/
+
+    var json = JSON.parse('{"city":"杭州","eleme_key":"4be1345e3c08f2ce13205edfa5180744","figureurl":"http://qzapp.qlogo.cn/qzapp/101204453/E705460BABA345A09E3B656F85DD1295/30","figureurl_1":"http://qzapp.qlogo.cn/qzapp/101204453/E705460BABA345A09E3B656F85DD1295/50","figureurl_2":"http://qzapp.qlogo.cn/qzapp/101204453/E705460BABA345A09E3B656F85DD1295/100","figureurl_qq_1":"http://thirdqq.qlogo.cn/qqapp/101204453/E705460BABA345A09E3B656F85DD1295/40","figureurl_qq_2":"http://thirdqq.qlogo.cn/qqapp/101204453/E705460BABA345A09E3B656F85DD1295/100","gender":"男","is_lost":0,"is_yellow_vip":"0","is_yellow_year_vip":"0","level":"0","msg":"","nickname":"Xander","openid":"E705460BABA345A09E3B656F85DD1295","province":"浙江","ret":0,"vip":"0","year":"1997","yellow_vip_level":"0","name":"Xander","avatar":"http://thirdqq.qlogo.cn/qqapp/101204453/E705460BABA345A09E3B656F85DD1295/40"}');
+    console.log(json);
+    var url = "https://h5.ele.me/restapi/marketing/promotion/weixin/E705460BABA345A09E3B656F85DD1295";
+    $.ajax({
+        // headers: {'User-Agent': agent},
+        url: url,
+        type: "POST",
+        data: '{"method":"phone","group_sn":"29f2a1519aac7871","sign":"4be1345e3c08f2ce13205edfa5180744","phone":"","platform":4,"track_id":"undefined","weixin_avatar":"http://thirdqq.qlogo.cn/qqapp/101204453/E705460BABA345A09E3B656F85DD1295/40","weixin_username":"Xander","unionid":"fuck"}',
+
+        success: function (data) {
+            $("body").html(data);
+        }
+    });
+</script>
+</html>

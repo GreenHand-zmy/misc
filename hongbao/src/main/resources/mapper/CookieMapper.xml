@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongbao.demo.mapper.CookieMapper">
+
+    <!--普通字段映射-->
+    <resultMap id="cookieMap" type="com.hongbao.demo.entity.Cookie">
+        <result column="cookie_id" property="cookieId"/>
+        <result column="cookie_content" property="cookieContent"/>
+        <result column="modified" property="modified"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="nickname" property="cookieInfo.nickName"/>
+        <result column="gender" property="cookieInfo.gender"/>
+        <result column="year" property="cookieInfo.year"/>
+        <result column="province" property="cookieInfo.province"/>
+        <result column="city" property="cookieInfo.city"/>
+        <result column="eleme_key" property="cookieInfo.elemeKey"/>
+        <result column="open_id" property="cookieInfo.openId"/>
+        <result column="avatar" property="cookieInfo.avatar"/>
+    </resultMap>
+
+    <select id="findById" resultMap="cookieMap">
+        SELECT *
+        FROM cookie
+        WHERE cookie_id = #{cookidId}
+    </select>
+
+    <select id="countByElemeKey" resultType="int">
+        SELECT count(*)
+        FROM cookie
+        WHERE eleme_key = #{elemeKey}
+    </select>
+    <select id="findAll" resultMap="cookieMap">
+        SELECT *
+        FROM cookie
+    </select>
+
+    <select id="findAvailableCookie" resultMap="cookieMap">
+        SELECT *
+        FROM cookie
+        WHERE modified &lt; 5
+              AND gmt_modified &lt; CURRENT_DATE
+        ORDER BY modified DESC
+        LIMIT #{number}
+    </select>
+
+    <update id="updateById" parameterType="com.hongbao.demo.entity.Cookie">
+        UPDATE cookie
+        <set>
+            <if test="#{cookieContent} != null">
+                cookie_content = #{cookieContent},
+            </if>
+
+            <if test="#{modified} != null">
+                modified = #{modified},
+            </if>
+
+            <if test="#{del} != null">
+                is_del = #{del},
+            </if>
+            gmt_modified = CURRENT_TIMESTAMP
+        </set>
+        WHERE cookie_id = #{cookieId}
+    </update>
+
+    <insert id="save" parameterType="com.hongbao.demo.entity.Cookie" useGeneratedKeys="true">
+        INSERT INTO
+            cookie (
+                nickname, gender, year, province,
+                city, eleme_key, open_id, avatar,
+                cookie_content, is_del, modified, user_id, gmt_create)
+        VALUES (
+            #{cookieInfo.nickName}, #{cookieInfo.gender},
+                                    #{cookieInfo.year}, #{cookieInfo.province},
+                                    #{cookieInfo.city}, #{cookieInfo.elemeKey},
+                                    #{cookieInfo.openId}, #{cookieInfo.avatar},
+                                    #{cookieContent}, #{del},
+                                    0, #{user.userId}, current_timestamp
+        )
+    </insert>
+</mapper>

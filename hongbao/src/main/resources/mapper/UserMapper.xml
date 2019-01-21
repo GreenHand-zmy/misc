@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongbao.demo.mapper.UserMapper">
+
+    <!--普通字段映射-->
+    <resultMap id="userMap" type="com.hongbao.demo.entity.User">
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="status" property="status"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+
+    <select id="findById" resultMap="userMap">
+        SELECT *
+        FROM user
+        where user_id = #{userId}
+    </select>
+</mapper>
